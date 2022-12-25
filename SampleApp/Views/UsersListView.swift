@@ -14,35 +14,11 @@ struct UsersListView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.secondarySystemBackground)
-                    .edgesIgnoringSafeArea(.top)
+                backgroundColor
                 ScrollView {
                     LazyVGrid(columns: column, alignment: .center, spacing: 16) {
                         ForEach(0...5, id:\.self) { item in
-                            HStack {
-                                VStack(alignment: .trailing) {
-                                    Image(systemName: "person")
-                                        .resizable()
-                                        .padding()
-                                    
-                                }
-                                .frame(width: 150, height: 150)
-                                Divider()
-                                Spacer()
-                                VStack(alignment: .leading) {
-                                    Text("INFO")
-                                    Text("INFO")
-                                    Text("INFO")
-                                    Text("INFO")
-                                }
-                                .frame(width: 200, height: 150, alignment: .leading)
-                                
-                            
-                                    
-                            }
-                            .frame(width: 360, height: 230)
-                            .background(Color.gray)
-                            .cornerRadius(20)
+                            OneUserGridView(user: item)
                             
                             
                         }
@@ -52,14 +28,7 @@ struct UsersListView: View {
             .navigationTitle("People")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        
-                    } label: {
-                        Text("Add user")
-                            .font(.system(.headline, design: .rounded)
-                                .bold())
-                            
-                    }
+                    addUser
 
                 }
             }
@@ -70,5 +39,22 @@ struct UsersListView: View {
 struct UsersListView_Previews: PreviewProvider {
     static var previews: some View {
         UsersListView()
+    }
+}
+
+private extension UsersListView {
+    var backgroundColor:some View {
+        Color(.secondarySystemBackground)
+            .edgesIgnoringSafeArea(.top)
+    }
+    var addUser:some View {
+        Button {
+            
+        } label: {
+            Text("Add user")
+                .font(.system(.headline, design: .rounded)
+                    .bold())
+                
+        }
     }
 }
