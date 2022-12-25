@@ -11,6 +11,11 @@
 		3BB9FC0E2957359C005B1956 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0D2957359C005B1956 /* ContentView.swift */; };
 		3BB9FC102957359D005B1956 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0F2957359D005B1956 /* Assets.xcassets */; };
 		3BB9FC142957359D005B1956 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC132957359D005B1956 /* Preview Assets.xcassets */; };
+		3BB9FC1F29573ECD005B1956 /* UsersListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC1E29573ECD005B1956 /* UsersListModel.swift */; };
+		3BB9FC212957434C005B1956 /* UserDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC202957434C005B1956 /* UserDetailModel.swift */; };
+		3BB9FC2429585061005B1956 /* UsersStaticData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC2329585061005B1956 /* UsersStaticData.json */; };
+		3BB9FC26295850C3005B1956 /* SingleUserStaticData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC25295850C3005B1956 /* SingleUserStaticData.json */; };
+		3BB9FC2829585201005B1956 /* StaticJSONMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC2729585201005B1956 /* StaticJSONMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +25,11 @@
 		3BB9FC0F2957359D005B1956 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BB9FC112957359D005B1956 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		3BB9FC132957359D005B1956 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3BB9FC1E29573ECD005B1956 /* UsersListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListModel.swift; sourceTree = "<group>"; };
+		3BB9FC202957434C005B1956 /* UserDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailModel.swift; sourceTree = "<group>"; };
+		3BB9FC2329585061005B1956 /* UsersStaticData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UsersStaticData.json; sourceTree = "<group>"; };
+		3BB9FC25295850C3005B1956 /* SingleUserStaticData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SingleUserStaticData.json; sourceTree = "<group>"; };
+		3BB9FC2729585201005B1956 /* StaticJSONMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticJSONMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,11 @@
 		3BB9FC0A2957359C005B1956 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				3BB9FC222958501B005B1956 /* JSON */,
+				3BB9FC1A295735E2005B1956 /* Utility */,
+				3BB9FC1B295735EB005B1956 /* Models */,
+				3BB9FC1C29573601005B1956 /* ViewModels */,
+				3BB9FC1D2957360D005B1956 /* Views */,
 				3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */,
 				3BB9FC0D2957359C005B1956 /* ContentView.swift */,
 				3BB9FC0F2957359D005B1956 /* Assets.xcassets */,
@@ -67,6 +82,46 @@
 				3BB9FC132957359D005B1956 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3BB9FC1A295735E2005B1956 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3BB9FC2729585201005B1956 /* StaticJSONMapper.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		3BB9FC1B295735EB005B1956 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3BB9FC1E29573ECD005B1956 /* UsersListModel.swift */,
+				3BB9FC202957434C005B1956 /* UserDetailModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3BB9FC1C29573601005B1956 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		3BB9FC1D2957360D005B1956 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3BB9FC222958501B005B1956 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				3BB9FC2329585061005B1956 /* UsersStaticData.json */,
+				3BB9FC25295850C3005B1956 /* SingleUserStaticData.json */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,8 +182,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BB9FC26295850C3005B1956 /* SingleUserStaticData.json in Resources */,
 				3BB9FC142957359D005B1956 /* Preview Assets.xcassets in Resources */,
 				3BB9FC102957359D005B1956 /* Assets.xcassets in Resources */,
+				3BB9FC2429585061005B1956 /* UsersStaticData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +197,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BB9FC0E2957359C005B1956 /* ContentView.swift in Sources */,
+				3BB9FC1F29573ECD005B1956 /* UsersListModel.swift in Sources */,
 				3BB9FC0C2957359C005B1956 /* SampleAppApp.swift in Sources */,
+				3BB9FC212957434C005B1956 /* UserDetailModel.swift in Sources */,
+				3BB9FC2829585201005B1956 /* StaticJSONMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
