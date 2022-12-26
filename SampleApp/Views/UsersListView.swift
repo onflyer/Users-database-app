@@ -11,13 +11,15 @@ struct UsersListView: View {
     
     private var column = Array(repeating: GridItem(.flexible()), count: 1)
     
+    @State private var users:[User] = []
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundColor
                 ScrollView {
                     LazyVGrid(columns: column, alignment: .center, spacing: 16) {
-                        ForEach(0...5, id:\.self) { item in
+                        ForEach(users, id:\.id) { item in
                             OneUserGridView(user: item)
                             
                             
@@ -31,10 +33,21 @@ struct UsersListView: View {
                     addUser
 
                 }
+                
+            }
+            .onAppear {
+                do {
+                    let res = try StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self) //znaci mozes odmah dekodirati glavni model koji sadrzi sve modele i cita ga bey problema (UserList a u njemu [User]
+                    users = res.data
+                } catch {
+                        print(error)
+                        
+                    }
+                }
             }
         }
     }
-}
+
 
 struct UsersListView_Previews: PreviewProvider {
     static var previews: some View {

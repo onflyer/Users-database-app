@@ -9,13 +9,20 @@ import SwiftUI
 
 struct OneUserGridView: View {
     
-    let user:Int
+    let user: User
     
     var body: some View {
         HStack {
             VStack(alignment: .trailing) {
-                Image(systemName: "person")
-                    .resizable()
+                AsyncImage(url: .init(string: user.picture), content: { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                }, placeholder: {
+                    ProgressView()
+                })
+                    
                     .padding()
                 
             }
@@ -23,7 +30,7 @@ struct OneUserGridView: View {
             Divider()
             Spacer()
             VStack(alignment: .leading) {
-                Text("INFO")
+                Text("\(user.firstName)")
                 Text("INFO")
                 Text("INFO")
                 Text("INFO")
@@ -39,8 +46,16 @@ struct OneUserGridView: View {
     }
 }
 
+
+
 struct OneUserGridView_Previews: PreviewProvider {
+    
+    static var previewOneUser:User { //add computed property to show one user from the array
+        let users = try! StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self)
+        return users.data.first!  // return first user
+    }
+    
     static var previews: some View {
-        OneUserGridView(user: 0)
+        OneUserGridView(user: previewOneUser)
     }
 }
