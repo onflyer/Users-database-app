@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct UserDetailView: View {
+    
+    @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-"
+    
     var body: some View {
         ZStack {
             backgroundColor
             
             ScrollView {
                 VStack(alignment: .leading,spacing: 18) {
+                    
+                        avatarPicture
                     
                     Group {
                         generalInfo
@@ -28,12 +33,25 @@ struct UserDetailView: View {
                 .padding()
             }
         }
+        .navigationTitle("User Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            do {
+                userDetail = try StaticJSONMapper.decode(file: "SingleUserStaticData", type: UserDetailModel.self)
+                
+            } catch {
+                    print(error)
+                    
+                }
+            }
     }
 }
 
 struct UserDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        UserDetailView()
+        NavigationStack {
+            UserDetailView()
+        }
     }
 }
 
@@ -43,23 +61,53 @@ private extension UserDetailView {
                 .edgesIgnoringSafeArea(.top)
         }
     
-    var linkInfo:some View {
-        Link(destination: .init(string: "https://randomuser.me/api/portraits/women/58.jpg")!) {
+    @ViewBuilder
+    var avatarPicture:some View {
+        if let userPictureURLFromJSON = userDetail?.picture,
+           let userPictureURL = URL(string: userPictureURLFromJSON) {
             
-            VStack(alignment: .leading,spacing: 8) {
-                Text("User URL")
-                    .foregroundColor(.primary)
-                    .font(.system(.body, design: .rounded, weight: .semibold))
-                Text("https://randomuser.me/api/portraits/women/58.jpg")
-                    .scaledToFit()
+            AsyncImage(url: userPictureURL) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     
+                    
+                
+            } placeholder: {
+                ProgressView()
             }
-            Spacer()
-            
-            Image(systemName: "link")
-                .font(.system(.title3,design: .rounded))
-            
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
         }
+    }
+    
+    @ViewBuilder
+    var linkInfo:some View {
+        
+        if let urlFromJSON = userDetail?.picture,
+           let userURL = URL(string: urlFromJSON),
+           let URLTitle = userDetail?.firstName {
+           
+            Link(destination: userURL) {
+                
+                VStack(alignment: .leading,spacing: 8) {
+                    Text(URLTitle)
+                        .foregroundColor(.primary)
+                        .font(.system(.body, design: .rounded, weight: .semibold))
+                        .multilineTextAlignment(.leading)
+                    Text(urlFromJSON)
+                        .scaledToFit()
+                        
+                }
+                Spacer()
+                
+                Image(systemName: "link")
+                    .font(.system(.title3,design: .rounded))
+                
+            }
+        }
+        
+        
     }
     }
 
@@ -82,14 +130,14 @@ private extension UserDetailView {
     var firstName:some View {
         Text("First Name")
             .font(.system(.body, design: .rounded,weight: .semibold))
-        Text("<First Name Here>")
+        Text(userDetail?.firstName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
         Divider()
     }
     
     @ViewBuilder
     var lastName:some View {
-        Text("Last Name")
+        Text(userDetail?.lastName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
         Text("<Last Name Here>")
         Divider()
@@ -99,7 +147,7 @@ private extension UserDetailView {
     var email:some View {
         Text("Email")
             .font(.system(.body, design: .rounded,weight: .semibold))
-        Text("<Email here>")
+        Text(userDetail?.email ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
     }
 }

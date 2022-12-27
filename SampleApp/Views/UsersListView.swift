@@ -13,6 +13,8 @@ struct UsersListView: View {
     
     @State private var users:[User] = []
     
+    @State private var shouldShowCreate = false //for showing sheet to create
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -20,7 +22,13 @@ struct UsersListView: View {
                 ScrollView {
                     LazyVGrid(columns: column, alignment: .center, spacing: 16) {
                         ForEach(users, id:\.id) { item in
-                            OneUserGridView(user: item)
+                            NavigationLink {
+                                UserDetailView()
+                            } label: {
+                                OneUserGridView(user: item) // sad prikazuje samo prvog ispravicemo
+                            }
+
+                            
                             
                             
                         }
@@ -44,6 +52,9 @@ struct UsersListView: View {
                         
                     }
                 }
+            .sheet(isPresented: $shouldShowCreate) {
+                CreateUserView()
+            }
             }
         }
     }
@@ -62,7 +73,7 @@ private extension UsersListView {
     }
     var addUser:some View {
         Button {
-            
+            shouldShowCreate.toggle() // for sheet
         } label: {
             Text("Add user")
                 .font(.system(.headline, design: .rounded)

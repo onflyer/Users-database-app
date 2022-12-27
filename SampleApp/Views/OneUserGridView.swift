@@ -35,7 +35,9 @@ struct OneUserGridView: View {
                 Text("INFO")
                 Text("INFO")
             }
+            .foregroundColor(.primary)
             .frame(width: 200, height: 150, alignment: .leading)
+        
             
         
                 
