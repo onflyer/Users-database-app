@@ -11,7 +11,8 @@ struct UsersListView: View {
     
     private var column = Array(repeating: GridItem(.flexible()), count: 1)
     
-    @State private var users:[User] = []
+    @StateObject private var vm = UsersListViewModel()
+    
     
     @State private var shouldShowCreate = false //for showing sheet to create
     
@@ -21,11 +22,11 @@ struct UsersListView: View {
                 backgroundColor
                 ScrollView {
                     LazyVGrid(columns: column, alignment: .center, spacing: 16) {
-                        ForEach(users, id:\.id) { item in
+                        ForEach(vm.users, id:\.id) { user in
                             NavigationLink {
-                                UserDetailView()
+                                UserDetailView(userId: user.id )  // pozovem id usera koji sam dobio iz foreach 
                             } label: {
-                                OneUserGridView(user: item) // sad prikazuje samo prvog ispravicemo
+                                OneUserGridView(user: user) // sad prikazuje samo prvog ispravicemo
                             }
 
                             
@@ -44,13 +45,9 @@ struct UsersListView: View {
                 
             }
             .onAppear {
-                do {
-                    let res = try StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self) //znaci mozes odmah dekodirati glavni model koji sadrzi sve modele i cita ga bey problema (UserList a u njemu [User]
-                    users = res.data
-                } catch {
-                        print(error)
-                        
-                    }
+                
+                vm.fetchUsers()
+               
                 }
             .sheet(isPresented: $shouldShowCreate) {
                 CreateUserView()

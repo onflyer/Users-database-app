@@ -19,7 +19,8 @@ final class NetworkingManager {
             completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
             return  // you need to call return because you need to stop execution after calling completion
         }
-        let request = URLRequest(url: url) // create request for url
+        var request = URLRequest(url: url) // create request for url
+        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
             if error != nil {
                 completion(.failure(NetworkingError.custom(error: error!)))

@@ -9,7 +9,11 @@ import SwiftUI
 
 struct UserDetailView: View {
     
-    @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-"
+    let userId:String // samo proslijedim id tip iz modela
+    
+    @StateObject private var vm = UserDetailViewModel()
+    
+   // @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-" COMMENTED OUT WHEN WE ADDED @StateObject
     
     var body: some View {
         ZStack {
@@ -36,21 +40,22 @@ struct UserDetailView: View {
         .navigationTitle("User Details")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            do {
-                userDetail = try StaticJSONMapper.decode(file: "SingleUserStaticData", type: UserDetailModel.self)
-                
-            } catch {
-                    print(error)
-                    
-                }
+            vm.fetchUserDetail(for: userId)
             }
     }
 }
 
 struct UserDetailView_Previews: PreviewProvider {
+    
+    private static var previewUserId:String {  // pozovem local json i vratim id prvog iz arraya
+        let users = try! StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self)
+        
+        return users.data.first!.id
+    }
+    
     static var previews: some View {
         NavigationStack {
-            UserDetailView()
+            UserDetailView(userId: previewUserId)  // proslijedim var koji sam kreirao da dobijem id prvog
         }
     }
 }
@@ -63,7 +68,7 @@ private extension UserDetailView {
     
     @ViewBuilder
     var avatarPicture:some View {
-        if let userPictureURLFromJSON = userDetail?.picture,
+        if let userPictureURLFromJSON = vm.userDetail?.picture,
            let userPictureURL = URL(string: userPictureURLFromJSON) {
             
             AsyncImage(url: userPictureURL) { image in
@@ -84,9 +89,9 @@ private extension UserDetailView {
     @ViewBuilder
     var linkInfo:some View {
         
-        if let urlFromJSON = userDetail?.picture,
+        if let urlFromJSON = vm.userDetail?.picture,
            let userURL = URL(string: urlFromJSON),
-           let URLTitle = userDetail?.firstName {
+           let URLTitle = vm.userDetail?.firstName {
            
             Link(destination: userURL) {
                 
@@ -130,14 +135,14 @@ private extension UserDetailView {
     var firstName:some View {
         Text("First Name")
             .font(.system(.body, design: .rounded,weight: .semibold))
-        Text(userDetail?.firstName ?? "-")
+        Text(vm.userDetail?.firstName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
         Divider()
     }
     
     @ViewBuilder
     var lastName:some View {
-        Text(userDetail?.lastName ?? "-")
+        Text(vm.userDetail?.lastName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
         Text("<Last Name Here>")
         Divider()
@@ -147,7 +152,7 @@ private extension UserDetailView {
     var email:some View {
         Text("Email")
             .font(.system(.body, design: .rounded,weight: .semibold))
-        Text(userDetail?.email ?? "-")
+        Text(vm.userDetail?.email ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
     }
 }
