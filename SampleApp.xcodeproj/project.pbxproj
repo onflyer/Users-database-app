@@ -23,6 +23,8 @@
 		3BB9FC32295B7649005B1956 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC31295B7649005B1956 /* NetworkingManager.swift */; };
 		3BB9FC34295B88AA005B1956 /* UsersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC33295B88AA005B1956 /* UsersListViewModel.swift */; };
 		3BB9FC36295B8ED1005B1956 /* UserDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC35295B8ED1005B1956 /* UserDetailViewModel.swift */; };
+		3BB9FC38295CC1A2005B1956 /* CreateUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC37295CC1A1005B1956 /* CreateUserModel.swift */; };
+		3BB9FC3C295CC242005B1956 /* CreateUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC3B295CC242005B1956 /* CreateUserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		3BB9FC31295B7649005B1956 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		3BB9FC33295B88AA005B1956 /* UsersListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListViewModel.swift; sourceTree = "<group>"; };
 		3BB9FC35295B8ED1005B1956 /* UserDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModel.swift; sourceTree = "<group>"; };
+		3BB9FC37295CC1A1005B1956 /* CreateUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserModel.swift; sourceTree = "<group>"; };
+		3BB9FC3B295CC242005B1956 /* CreateUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 			children = (
 				3BB9FC1E29573ECD005B1956 /* UsersListModel.swift */,
 				3BB9FC202957434C005B1956 /* UserDetailModel.swift */,
+				3BB9FC37295CC1A1005B1956 /* CreateUserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			children = (
 				3BB9FC33295B88AA005B1956 /* UsersListViewModel.swift */,
 				3BB9FC35295B8ED1005B1956 /* UserDetailViewModel.swift */,
+				3BB9FC3B295CC242005B1956 /* CreateUserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -221,12 +227,14 @@
 				3BB9FC2A295855C2005B1956 /* UsersListView.swift in Sources */,
 				3BB9FC1F29573ECD005B1956 /* UsersListModel.swift in Sources */,
 				3BB9FC32295B7649005B1956 /* NetworkingManager.swift in Sources */,
+				3BB9FC38295CC1A2005B1956 /* CreateUserModel.swift in Sources */,
 				3BB9FC0C2957359C005B1956 /* SampleAppApp.swift in Sources */,
 				3BB9FC2E295A15BA005B1956 /* UserDetailView.swift in Sources */,
 				3BB9FC36295B8ED1005B1956 /* UserDetailViewModel.swift in Sources */,
 				3BB9FC212957434C005B1956 /* UserDetailModel.swift in Sources */,
 				3BB9FC2829585201005B1956 /* StaticJSONMapper.swift in Sources */,
 				3BB9FC34295B88AA005B1956 /* UsersListViewModel.swift in Sources */,
+				3BB9FC3C295CC242005B1956 /* CreateUserViewModel.swift in Sources */,
 				3BB9FC30295ADFE6005B1956 /* CreateUserView.swift in Sources */,
 				3BB9FC2C29586790005B1956 /* OneUserGridView.swift in Sources */,
 			);

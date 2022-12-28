@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateUserView: View {
     
     @Environment(\.dismiss) private var dismiss  // for done to dissmis
+    @StateObject private var vm = CreateUserViewModel()
     
     var body: some View {
         NavigationStack {
@@ -30,7 +31,14 @@ struct CreateUserView: View {
 
                 }
                 
-            }        }
+            }
+            .onChange(of: vm.state) { formState in
+                if formState == .successfull {
+                    dismiss()
+                }
+            }
+            
+        }
     }
 }
 
@@ -49,18 +57,18 @@ private extension CreateUserView {
     }
     
     var firstName: some View {
-        TextField("First Name", text: .constant(""))
+        TextField("First Name", text: $vm.user.firstName)
     }
     var lastName: some View {
-        TextField("Last Name", text: .constant(""))
+        TextField("Last Name", text: $vm.user.lastName)
     }
     var email: some View {
-        TextField("Email", text: .constant(""))
+        TextField("Email", text: $vm.user.email)
     }
     
     var submitButton: some View {
         Button("Submit") {
-            // HANDLE LATER
+            vm.create()
         }
     }
 }

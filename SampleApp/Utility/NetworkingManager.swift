@@ -13,14 +13,19 @@ final class NetworkingManager {
     
     private init() {}
     
-    func request<T: Codable>(_ absoluteURL: String, type: T.Type, completion: @escaping (Result<T, Error>) -> Void ) {
+    
+    func request<T: Codable>(methodType:MethodType = .GET,
+                             _ absoluteURL: String,
+                             type: T.Type, completion: @escaping (Result<T, Error>) -> Void ) {
         
         guard let url = URL(string: absoluteURL) else { // create url
             completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
             return  // you need to call return because you need to stop execution after calling completion
         }
-        var request = URLRequest(url: url) // create request for url
-        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
+        
+        var request = buildRequest(from: url, methodType: methodType) // create request for url
+        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")//app id and token
+        
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
             if error != nil {
                 completion(.failure(NetworkingError.custom(error: error!)))
@@ -32,6 +37,7 @@ final class NetworkingManager {
                 completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
                 return
             }
+        
             
             guard let data = data else {  // unwrap data
                 completion(.failure(NetworkingError.invalidData))
@@ -50,8 +56,37 @@ final class NetworkingManager {
         dataTask.resume()
         
     }
-}
 
+
+    func request(methodType: MethodType = .GET,
+    _ absoluteURL:String,
+             completion: @escaping (Result<Void,Error>) -> Void) {
+    
+    guard let url = URL(string: absoluteURL) else { // create url
+        completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
+        return  // you need to call return because you need to stop execution after calling completion
+    }
+    var request = URLRequest(url: url) // create request for url
+    request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
+   
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
+        if error != nil {
+            completion(.failure(NetworkingError.custom(error: error!)))
+            return
+        }
+        guard let response = response as? HTTPURLResponse,    // handle response
+              (200...300) ~= response.statusCode else {
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
+            return
+        }
+        
+        completion(.success(()))
+        
+    }
+    dataTask.resume()
+}
+}
 
 extension NetworkingManager {
     enum NetworkingError: Error {
@@ -60,5 +95,30 @@ extension NetworkingManager {
         case invalidStatusCode(statusCode: Int)
         case invalidData
         case failedToDecode(error: Error)
+    }
+}
+
+extension NetworkingManager {
+    enum MethodType {
+        case GET
+        case POST(data: Data?) //associated value to send some kind of data and make it an optional if you dont want send anything through
+    }
+}
+
+private extension NetworkingManager {
+    func buildRequest(from url:URL,
+                      methodType:MethodType) -> URLRequest {
+        
+        var request = URLRequest(url: url) // create request for url
+        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")
+        
+        switch methodType {
+        case .GET:
+            request.httpMethod = "GET"
+        case .POST(let data):
+            request.httpMethod = "POST"
+            request.httpBody = data   // link the data to send with our request to requestBody
+        }
+        return request
     }
 }
