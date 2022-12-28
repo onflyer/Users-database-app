@@ -10,6 +10,8 @@ import Foundation
 final class UsersListViewModel: ObservableObject {
     
     @Published private (set) var users:[User] = []
+    @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published var hasError = false
     
     func fetchUsers() {
         NetworkingManager.shared.request("https://dummyapi.io/data/v1/user/", type: UsersList.self) { [weak self] res in
@@ -19,7 +21,8 @@ final class UsersListViewModel: ObservableObject {
                 case.success(let response):
                     self?.users = response.data
                 case.failure(let error):
-                    print(error)
+                    self?.hasError = true
+                    self?.error = error as? NetworkingManager.NetworkingError
                 }
             }
         }

@@ -12,6 +12,8 @@ final class CreateUserViewModel: ObservableObject {
     
     @Published var user = CreateUser()
     @Published private (set) var state: SubmissionState?
+    @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published var hasError = false
     
     func create() {
         let encoder = JSONEncoder()
@@ -28,6 +30,8 @@ final class CreateUserViewModel: ObservableObject {
                     self?.state = .successfull
                 case .failure(let err):
                     self?.state = .unsuccessfull
+                    self?.hasError = true
+                    self?.error = err as? NetworkingManager.NetworkingError
                 }
             }
         }

@@ -42,6 +42,7 @@ struct UserDetailView: View {
         .onAppear {
             vm.fetchUserDetail(for: userId)
             }
+        .alert(isPresented: $vm.hasError, error: vm.error) { }
     }
 }
 

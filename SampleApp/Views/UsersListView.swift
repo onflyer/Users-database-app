@@ -52,6 +52,7 @@ struct UsersListView: View {
             .sheet(isPresented: $shouldShowCreate) {
                 CreateUserView()
             }
+            .alert(isPresented: $vm.hasError, error: vm.error) { } // ok button default for alert
             }
         }
     }
