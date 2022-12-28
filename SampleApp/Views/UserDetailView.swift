@@ -19,23 +19,29 @@ struct UserDetailView: View {
         ZStack {
             backgroundColor
             
-            ScrollView {
-                VStack(alignment: .leading,spacing: 18) {
-                    
+            if vm.isLoading {
+                ProgressView()
+            }else {
+                
+                ScrollView {
+                    VStack(alignment: .leading,spacing: 18) {
+                        
                         avatarPicture
-                    
-                    Group {
-                        generalInfo
-                        linkInfo
+                        
+                        Group {
+                            generalInfo
+                            linkInfo
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical,18)
+                        .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        
+                        
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical,18)
-                    .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    
-                    
+                    .padding()
                 }
-                .padding()
             }
+            
         }
         .navigationTitle("User Details")
         .navigationBarTitleDisplayMode(.inline)

@@ -15,23 +15,27 @@ struct UsersListView: View {
     
     
     @State private var shouldShowCreate = false //for showing sheet to create
+    @State private var shouldShowSuccess = false // for checkmark popover
     
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundColor
-                ScrollView {
-                    LazyVGrid(columns: column, alignment: .center, spacing: 16) {
-                        ForEach(vm.users, id:\.id) { user in
-                            NavigationLink {
-                                UserDetailView(userId: user.id )  // pozovem id usera koji sam dobio iz foreach 
-                            } label: {
-                                OneUserGridView(user: user) // sad prikazuje samo prvog ispravicemo
+                
+                if vm.isLoading {
+                    ProgressView()
+                }else {
+                    
+                    ScrollView {
+                        LazyVGrid(columns: column, alignment: .center, spacing: 16) {
+                            ForEach(vm.users, id:\.id) { user in
+                                NavigationLink {
+                                    UserDetailView(userId: user.id )  // pozovem id usera koji sam dobio iz foreach
+                                } label: {
+                                    OneUserGridView(user: user) // sad prikazuje samo prvog ispravicemo
+                                }
+                       
                             }
-
-                            
-                            
-                            
                         }
                     }
                 }
@@ -50,9 +54,30 @@ struct UsersListView: View {
                
                 }
             .sheet(isPresented: $shouldShowCreate) {
-                CreateUserView()
+                CreateUserView{  // closure for checkmark
+                    withAnimation(.spring().delay(0.25)) {
+                        self.shouldShowSuccess.toggle()
+                    }
+                }
             }
-            .alert(isPresented: $vm.hasError, error: vm.error) { } // ok button default for alert
+            .alert(isPresented: $vm.hasError, error: vm.error) {
+                Button("Retry") {
+                    vm.fetchUsers()
+                }
+            } // ok button default for alert
+            .overlay {
+                if shouldShowSuccess { // showing and hiding overlay checkmark
+                    CheckMarkPopoverView()
+                        .transition(.scale.combined(with: .opacity))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation(.spring()) {
+                                    self.shouldShowSuccess.toggle()
+                                }
+                            }
+                        }
+                }
+            }
             }
         }
     }
@@ -78,5 +103,6 @@ private extension UsersListView {
                     .bold())
                 
         }
+        .disabled(vm.isLoading)  // so you cant click add user when is loading is true
     }
 }

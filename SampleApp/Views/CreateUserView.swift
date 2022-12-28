@@ -11,6 +11,7 @@ struct CreateUserView: View {
     
     @Environment(\.dismiss) private var dismiss  // for done to dissmis
     @StateObject private var vm = CreateUserViewModel()
+    let successfulAction: () -> Void // popover checkmark
     
     var body: some View {
         NavigationStack {
@@ -24,6 +25,7 @@ struct CreateUserView: View {
                     submitButton
                 }
             }
+            .disabled(vm.state == .submitting)
             .navigationTitle("Create User")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -35,6 +37,14 @@ struct CreateUserView: View {
             .onChange(of: vm.state) { formState in
                 if formState == .successfull {
                     dismiss()
+                    successfulAction()
+                }
+                    
+            }
+            .alert(isPresented: $vm.hasError, error: vm.error) { }
+            .overlay {
+                if vm.state == .submitting {
+                    ProgressView()
                 }
             }
             
@@ -44,7 +54,7 @@ struct CreateUserView: View {
 
 struct CreateUserView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateUserView()
+        CreateUserView{}
     }
 }
 

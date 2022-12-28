@@ -16,8 +16,8 @@ final class CreateUserViewModel: ObservableObject {
     @Published var hasError = false
     
     func create() {
+        state = .submitting
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         let data = try? encoder.encode(user)
         
         NetworkingManager.shared.request(methodType: .POST(data: data), "https://dummyapi.io/data/v1/user/create?app-id=63a704ab6f2b84b6b5c9786a") { [weak self] res in
@@ -42,5 +42,6 @@ extension CreateUserViewModel {  // we can comunicate back to the view if its su
     enum SubmissionState {
         case unsuccessfull
         case successfull
+        case submitting // for progresview 
     }
 }
