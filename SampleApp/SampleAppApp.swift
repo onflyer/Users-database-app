@@ -17,6 +17,11 @@ struct SampleAppApp: App {
                         Image(systemName: "person.2")
                         Text("Home")
                     }
+                SettingsView()
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
             }
             
         }

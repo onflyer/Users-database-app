@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OneUserGridView: View {
     
+    
     let user: User
     
     var body: some View {
@@ -46,6 +47,7 @@ struct OneUserGridView: View {
         .background(Color.gray)
         .cornerRadius(20)
     }
+        
 }
 
 
