@@ -28,6 +28,7 @@
 		3BB9FC3E295CD5F2005B1956 /* CheckMarkPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC3D295CD5F2005B1956 /* CheckMarkPopoverView.swift */; };
 		3BB9FC40295ED6E4005B1956 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC3F295ED6E4005B1956 /* SettingsView.swift */; };
 		3BB9FC42295EDD29005B1956 /* CreateUserValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC41295EDD29005B1956 /* CreateUserValidator.swift */; };
+		3BB9FC44295EE5C4005B1956 /* EndpointEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC43295EE5C4005B1956 /* EndpointEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		3BB9FC3D295CD5F2005B1956 /* CheckMarkPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkPopoverView.swift; sourceTree = "<group>"; };
 		3BB9FC3F295ED6E4005B1956 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3BB9FC41295EDD29005B1956 /* CreateUserValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserValidator.swift; sourceTree = "<group>"; };
+		3BB9FC43295EE5C4005B1956 /* EndpointEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				3BB9FC2729585201005B1956 /* StaticJSONMapper.swift */,
 				3BB9FC31295B7649005B1956 /* NetworkingManager.swift */,
 				3BB9FC41295EDD29005B1956 /* CreateUserValidator.swift */,
+				3BB9FC43295EE5C4005B1956 /* EndpointEnum.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				3BB9FC36295B8ED1005B1956 /* UserDetailViewModel.swift in Sources */,
 				3BB9FC40295ED6E4005B1956 /* SettingsView.swift in Sources */,
 				3BB9FC42295EDD29005B1956 /* CreateUserValidator.swift in Sources */,
+				3BB9FC44295EE5C4005B1956 /* EndpointEnum.swift in Sources */,
 				3BB9FC212957434C005B1956 /* UserDetailModel.swift in Sources */,
 				3BB9FC2829585201005B1956 /* StaticJSONMapper.swift in Sources */,
 				3BB9FC34295B88AA005B1956 /* UsersListViewModel.swift in Sources */,

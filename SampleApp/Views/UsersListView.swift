@@ -16,6 +16,7 @@ struct UsersListView: View {
     
     @State private var shouldShowCreate = false //for showing sheet to create
     @State private var shouldShowSuccess = false // for checkmark popover
+    @State private var hasAppeared = false  //stop fetching unnesecery data
     
     var body: some View {
         NavigationStack {
@@ -38,6 +39,9 @@ struct UsersListView: View {
                             }
                         }
                     }
+                    .refreshable {  // pull to refresh
+                        vm.fetchUsers()
+                    }
                 }
             }
             .navigationTitle("People")
@@ -49,8 +53,11 @@ struct UsersListView: View {
                 
             }
             .onAppear {
+                if !hasAppeared { // if hasAppearred is equal to false, for not fetching everytime
+                    vm.fetchUsers()
+                    hasAppeared = true
+                }
                 
-                vm.fetchUsers()
                
                 }
             .sheet(isPresented: $shouldShowCreate) {

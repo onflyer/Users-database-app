@@ -14,6 +14,8 @@ final class UsersListViewModel: ObservableObject {
     @Published private(set) var isLoading:Bool = false
     @Published var hasError = false
     
+    
+    
     func fetchUsers() {
         isLoading = true
         NetworkingManager.shared.request("https://dummyapi.io/data/v1/user/", type: UsersList.self) { [weak self] res in
