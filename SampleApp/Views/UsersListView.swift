@@ -25,7 +25,7 @@ struct UsersListView: View {
                 
                 if vm.isLoading {
                     ProgressView()
-                }else {
+                } else {
                     
                     ScrollView {
                         LazyVGrid(columns: column, alignment: .center, spacing: 16) {
@@ -33,7 +33,7 @@ struct UsersListView: View {
                                 NavigationLink {
                                     UserDetailView(userId: user.id )  // pozovem id usera koji sam dobio iz foreach
                                 } label: {
-                                    OneUserGridView(user: user) // sad prikazuje samo prvog ispravicemo
+                                    OneUserGridView(user: user) 
                                 }
                        
                             }

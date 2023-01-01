@@ -17,7 +17,7 @@ final class UserDetailViewModel:ObservableObject {
     
     func fetchUserDetail(for id: String) {  // for id:string is to use string interpolation for url to add id for each user so when we click on user we can access his userdetailmodel
         isLoading = true
-        NetworkingManager.shared.request("https://dummyapi.io/data/v1/user/\(id)", type: UserDetailModel.self) { [weak self] res in
+        NetworkingManager.shared.request(.userDetail1(id: id), type: UserDetailModel.self) { [weak self] res in
             
             DispatchQueue.main.async {
                 defer { self?.isLoading = false }

@@ -10,8 +10,8 @@ import Foundation
 //MARK: NE KORISTIM OVO UOPSTE U APP ALI MOZE SE UVESTI
 
 enum EndPoint {
-    case usersList (page:Int)
-    case userDetail(id: String)
+    case usersList
+    case userDetail1(id: String)
     case createUser(submissionData: Data?)
 }
 
@@ -24,37 +24,37 @@ extension EndPoint {
 
 extension EndPoint {
     
-    var host: String {"https://dummyapi.io/data/v1/"}
+    var host: String {"dummyapi.io"}
     
     var path: String {
         switch self {
         case .usersList:
-            return "user"
-        case .userDetail (let id):
-            return "user\(id)"
+            return "/data/v1/user"
+        case .userDetail1 (let id):
+            return "/data/v1/user/\(id)"
         case .createUser:
-            return "user/create"
+            return "/data/v1/user/create"
         }
     }
     var methodType:MethodType {
         switch self {
         case .usersList:
             return .GET
-        case .userDetail:  // no need for let id:
+        case .userDetail1:  // no need for let id its just for this is .get request
             return .GET
         case .createUser(let data):
             return .POST(data: data)
         }
     }
     
-    var queryItems: [String: String]? {  // optional because you sometimes dont need query items
-        switch self {
-        case .usersList(let page):
-            return ["page": "\(page)"]
-        default:
-            return nil
-        }
-    }
+//    var queryItems: [String: String]? {  // optional because you sometimes dont need query items
+//        switch self {
+//        case .usersList(let page):
+//            return ["page": "\(page)"]
+//        default:
+//            return nil
+//        }
+//    }
 }
 
 extension EndPoint {
@@ -63,10 +63,13 @@ extension EndPoint {
         urlComponents.scheme = "https"  // http or https
         urlComponents.host = host
         urlComponents.path = path
+//        urlComponents.queryItems = [
+//        URLQueryItem(name: <#T##String#>, value: <#T##String?#>)
+//        ]
         
-        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
-            URLQueryItem(name: item.key, value: item.value)
-        }
+//        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
+//            URLQueryItem(name: item.key, value: item.value)
+//        }
         
         return urlComponents.url  // returnt url from components
     }

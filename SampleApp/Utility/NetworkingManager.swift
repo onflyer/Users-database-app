@@ -14,16 +14,15 @@ final class NetworkingManager {
     private init() {}
     
     
-    func request<T: Codable>(methodType:MethodType = .GET,
-                             _ absoluteURL: String,
+    func request<T: Codable>(_ endpoint: EndPoint,
                              type: T.Type, completion: @escaping (Result<T, Error>) -> Void ) {
         
-        guard let url = URL(string: absoluteURL) else { // create url
+        guard let url = endpoint.url else { // create url
             completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
             return  // you need to call return because you need to stop execution after calling completion
         }
         
-        var request = buildRequest(from: url, methodType: methodType) // create request for url
+        var request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
         request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")//app id and token
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
@@ -58,15 +57,16 @@ final class NetworkingManager {
     }
 
 
-    func request(methodType: MethodType = .GET,
-    _ absoluteURL:String,
+    func request(_ endpoint: EndPoint,
              completion: @escaping (Result<Void,Error>) -> Void) {
     
-    guard let url = URL(string: absoluteURL) else { // create url
+        guard let url = endpoint.url else { // create url
         completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
         return  // you need to call return because you need to stop execution after calling completion
     }
-    var request = URLRequest(url: url) // create request for url
+        
+        var request = buildRequest(from: url, methodType: endpoint.methodType)
+
     request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
    
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
@@ -116,16 +116,11 @@ extension NetworkingManager.NetworkingError {  //override error with our own err
     }
 }
 
-extension NetworkingManager {
-    enum MethodType {
-        case GET
-        case POST(data: Data?) //associated value to send some kind of data and make it an optional if you dont want send anything through
-    }
-}
+
 
 private extension NetworkingManager {
-    func buildRequest(from url:URL,
-                      methodType:MethodType) -> URLRequest {
+    func buildRequest(from url: URL,
+                      methodType:EndPoint.MethodType) -> URLRequest {
         
         var request = URLRequest(url: url) // create request for url
         request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")

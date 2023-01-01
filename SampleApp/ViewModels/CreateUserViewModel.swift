@@ -26,7 +26,7 @@ final class CreateUserViewModel: ObservableObject {
             let encoder = JSONEncoder()
             let data = try? encoder.encode(user)
             
-            NetworkingManager.shared.request(methodType: .POST(data: data), "https://dummyapi.io/data/v1/user/create?app-id=63a704ab6f2b84b6b5c9786a") { [weak self] res in
+            NetworkingManager.shared.request(.createUser(submissionData: data)) { [weak self] res in
                
                 DispatchQueue.main.async {
                    

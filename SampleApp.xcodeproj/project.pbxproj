@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3BB9FC0C2957359C005B1956 /* SampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */; };
-		3BB9FC0E2957359C005B1956 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0D2957359C005B1956 /* ContentView.swift */; };
 		3BB9FC102957359D005B1956 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0F2957359D005B1956 /* Assets.xcassets */; };
 		3BB9FC142957359D005B1956 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC132957359D005B1956 /* Preview Assets.xcassets */; };
 		3BB9FC1F29573ECD005B1956 /* UsersListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC1E29573ECD005B1956 /* UsersListModel.swift */; };
@@ -34,7 +33,6 @@
 /* Begin PBXFileReference section */
 		3BB9FC082957359C005B1956 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppApp.swift; sourceTree = "<group>"; };
-		3BB9FC0D2957359C005B1956 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3BB9FC0F2957359D005B1956 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BB9FC112957359D005B1956 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		3BB9FC132957359D005B1956 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -56,6 +54,7 @@
 		3BB9FC3F295ED6E4005B1956 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3BB9FC41295EDD29005B1956 /* CreateUserValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserValidator.swift; sourceTree = "<group>"; };
 		3BB9FC43295EE5C4005B1956 /* EndpointEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointEnum.swift; sourceTree = "<group>"; };
+		3BB9FC45295F592A005B1956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,13 +87,13 @@
 		3BB9FC0A2957359C005B1956 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				3BB9FC45295F592A005B1956 /* Info.plist */,
 				3BB9FC222958501B005B1956 /* JSON */,
 				3BB9FC1A295735E2005B1956 /* Utility */,
 				3BB9FC1B295735EB005B1956 /* Models */,
 				3BB9FC1C29573601005B1956 /* ViewModels */,
 				3BB9FC1D2957360D005B1956 /* Views */,
 				3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */,
-				3BB9FC0D2957359C005B1956 /* ContentView.swift */,
 				3BB9FC0F2957359D005B1956 /* Assets.xcassets */,
 				3BB9FC112957359D005B1956 /* SampleApp.entitlements */,
 				3BB9FC122957359D005B1956 /* Preview Content */,
@@ -235,7 +234,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BB9FC0E2957359C005B1956 /* ContentView.swift in Sources */,
 				3BB9FC2A295855C2005B1956 /* UsersListView.swift in Sources */,
 				3BB9FC1F29573ECD005B1956 /* UsersListModel.swift in Sources */,
 				3BB9FC32295B7649005B1956 /* NetworkingManager.swift in Sources */,
@@ -381,6 +379,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -419,6 +418,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

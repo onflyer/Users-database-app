@@ -18,7 +18,7 @@ final class UsersListViewModel: ObservableObject {
     
     func fetchUsers() {
         isLoading = true
-        NetworkingManager.shared.request("https://dummyapi.io/data/v1/user/", type: UsersList.self) { [weak self] res in
+        NetworkingManager.shared.request(.usersList, type: UsersList.self) { [weak self] res in
             
             DispatchQueue.main.async {
                 defer {
