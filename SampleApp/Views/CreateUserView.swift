@@ -104,7 +104,10 @@ private extension CreateUserView {
     var submitButton: some View {
         Button("Submit") {
             focusedField = nil // for removing atribute errors
-            vm.create()
+            Task {
+               await vm.create()
+            }
+           
         }
     }
 }

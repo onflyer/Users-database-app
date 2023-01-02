@@ -45,8 +45,8 @@ struct UserDetailView: View {
         }
         .navigationTitle("User Details")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            vm.fetchUserDetail(for: userId)
+        .task {
+            await vm.fetchUserDetail(for: userId)
             }
         .alert(isPresented: $vm.hasError, error: vm.error) { }
     }

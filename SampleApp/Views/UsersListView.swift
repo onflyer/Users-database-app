@@ -40,7 +40,7 @@ struct UsersListView: View {
                         }
                     }
                     .refreshable {  // pull to refresh
-                        vm.fetchUsers()
+                        await vm.fetchUsers()
                     }
                 }
             }
@@ -52,9 +52,9 @@ struct UsersListView: View {
                 }
                 
             }
-            .onAppear {
+            .task { //you use .task with onAppear becaiuse it handles cancelation automaticaly not Task closure
                 if !hasAppeared { // if hasAppearred is equal to false, for not fetching everytime
-                    vm.fetchUsers()
+                   await vm.fetchUsers()
                     hasAppeared = true
                 }
                 
@@ -69,7 +69,10 @@ struct UsersListView: View {
             }
             .alert(isPresented: $vm.hasError, error: vm.error) {
                 Button("Retry") {
-                    vm.fetchUsers()
+                    Task {
+                       await vm.fetchUsers() // when you use a trigger to start async code line gesture or button, you use Task closure not .task modifier
+                    }
+                    
                 }
             } // ok button default for alert
             .overlay {

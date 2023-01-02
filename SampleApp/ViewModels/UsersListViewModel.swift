@@ -15,23 +15,23 @@ final class UsersListViewModel: ObservableObject {
     @Published var hasError = false
     
     
-    
-    func fetchUsers() {
+    @MainActor
+    func fetchUsers() async {
         isLoading = true
-        NetworkingManager.shared.request(.usersList, type: UsersList.self) { [weak self] res in
-            
-            DispatchQueue.main.async {
-                defer {
-                    self?.isLoading = false
-                }
-                switch res {
-                case.success(let response):
-                    self?.users = response.data
-                case.failure(let error):
-                    self?.hasError = true
-                    self?.error = error as? NetworkingManager.NetworkingError
-                }
+        defer { isLoading = false }
+        
+        do {
+            let response = try await NetworkingManager.shared.request(.usersList, type: UsersList.self)
+            self.users = response.data
+        } catch  {
+            self.hasError = true
+            if let networkingError = error as? NetworkingManager.NetworkingError {
+                self.error = networkingError
+            } else {
+                self.error = .custom(error: error)
             }
         }
+            
+        
     }
 }

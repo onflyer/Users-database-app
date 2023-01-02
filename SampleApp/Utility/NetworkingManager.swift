@@ -15,77 +15,52 @@ final class NetworkingManager {
     
     
     func request<T: Codable>(_ endpoint: EndPoint,
-                             type: T.Type, completion: @escaping (Result<T, Error>) -> Void ) {
+                             type: T.Type) async throws -> T {
         
         guard let url = endpoint.url else { // create url
-            completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
-            return  // you need to call return because you need to stop execution after calling completion
+            throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
+              // you need to call return because you need to stop execution after calling completion
         }
         
         var request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
         request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")//app id and token
         
-        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
-            if error != nil {
-                completion(.failure(NetworkingError.custom(error: error!)))
-                return
-            }
-            guard let response = response as? HTTPURLResponse,    // handle response
-                  (200...300) ~= response.statusCode else {
-                let statusCode = (response as! HTTPURLResponse).statusCode
-                completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
-                return
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
         
-            
-            guard let data = data else {  // unwrap data
-                completion(.failure(NetworkingError.invalidData))
-                return
-            }
-            do {
-                let decoder = JSONDecoder()                // decode data
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let res = try decoder.decode(T.self, from: data)
-                completion(.success(res))
-            } catch {
-                completion(.failure(NetworkingError.failedToDecode(error: error)))
-            }
-            
-        }
-        dataTask.resume()
-        
-    }
-
-
-    func request(_ endpoint: EndPoint,
-             completion: @escaping (Result<Void,Error>) -> Void) {
-    
-        guard let url = endpoint.url else { // create url
-        completion(.failure(NetworkingError.invalidUrl))  // if it fails we call our completion and show error
-        return  // you need to call return because you need to stop execution after calling completion
-    }
-        
-        var request = buildRequest(from: url, methodType: endpoint.methodType)
-
-    request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
-   
-        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in //create dataTask to execute request , dont forget to call resume
-        if error != nil {
-            completion(.failure(NetworkingError.custom(error: error!)))
-            return
-        }
         guard let response = response as? HTTPURLResponse,    // handle response
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
-            completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
-            return
+           throw NetworkingError.invalidStatusCode(statusCode: statusCode)
         }
+        let decoder = JSONDecoder()                // decode data
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let res = try decoder.decode(T.self, from: data)
         
-        completion(.success(()))
+        return res
+        
         
     }
-    dataTask.resume()
-}
+
+
+    func request(_ endpoint: EndPoint) async throws {
+    
+        guard let url = endpoint.url else { // create url
+            throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
+              // you need to call return because you need to stop execution after calling completion
+        }
+        
+        var request = buildRequest(from: url, methodType: endpoint.methodType)
+
+        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse,    // handle response
+              (200...300) ~= response.statusCode else {
+            let statusCode = (response as! HTTPURLResponse).statusCode
+           throw NetworkingError.invalidStatusCode(statusCode: statusCode)
+        }
+    }
 }
 
 extension NetworkingManager {
