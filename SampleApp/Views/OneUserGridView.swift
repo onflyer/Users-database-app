@@ -31,20 +31,21 @@ struct OneUserGridView: View {
             Divider()
             Spacer()
             VStack(alignment: .leading) {
+                Text("\(user.title.rawValue.capitalized)")
                 Text("\(user.firstName)")
-                Text("INFO")
-                Text("INFO")
-                Text("INFO")
+                Text("\(user.lastName)")
+               
             }
             .foregroundColor(.primary)
             .frame(width: 200, height: 150, alignment: .leading)
+            .font(.system(.title, design: .rounded, weight: .bold))
             
             
             
             
         }
-        .frame(width: 360, height: 230)
-        .background(Color.gray)
+        .frame(width: 360, height: 150)
+        .background(Color.white)
         .cornerRadius(20)
     }
     

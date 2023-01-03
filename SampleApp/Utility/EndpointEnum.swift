@@ -10,7 +10,7 @@ import Foundation
 // UVEDENO NA CIJELI APP
 
 enum EndPoint {
-    case usersList(page: Int)
+    case usersList(page: Int,limit:Int)
     case userDetail1(id: String)
     case createUser(submissionData: Data?)
 }
@@ -49,8 +49,8 @@ extension EndPoint {
     
     var queryItems: [String: String]? {  // this is for PAGE AND LIMIT PARAMETERS, optional because you sometimes dont need query items
         switch self {
-        case .usersList(let page):
-            return ["page": "\(page)"]
+        case .usersList(let page, let limit):
+            return ["page": "\(page)", "limit": "\(limit)"]  //query items 
         default:
             return nil
         }
@@ -64,7 +64,7 @@ extension EndPoint {
         urlComponents.host = host
         urlComponents.path = path
         
-        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
+        let requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
             URLQueryItem(name: item.key, value: item.value)  // in this case item.key is "page" and item value is \(page)
         }
         

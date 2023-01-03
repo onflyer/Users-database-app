@@ -16,6 +16,8 @@ final class UsersListViewModel: ObservableObject {
     
     private var page = 0 //for infinite scrolling
     private var totalPages:Int? // if we reach limit for total number of pages to not make a new request
+    private var limit = 10
+    private var pageLimit: Int?
     
     var isLoading:Bool {  // computed property for UsersListView isLoading
         viewState == .loading
@@ -32,7 +34,7 @@ final class UsersListViewModel: ObservableObject {
         defer { viewState = .finished }
         
         do {
-            let response = try await NetworkingManager.shared.request(.usersList(page: page), type: UsersList.self)
+            let response = try await NetworkingManager.shared.request(.usersList(page: page, limit: limit), type: UsersList.self)
             self.totalPages = response.total //set total pages limit from model
             self.users = response.data
         } catch  {
@@ -56,7 +58,7 @@ final class UsersListViewModel: ObservableObject {
         page += 1
         
         do {
-            let response = try await NetworkingManager.shared.request(.usersList(page: page), type: UsersList.self)
+            let response = try await NetworkingManager.shared.request(.usersList(page: page, limit: limit), type: UsersList.self)
             self.totalPages = response.total //set total pages limit from model
             self.users += response.data  // append new data onto the users Array from next page
         } catch  {

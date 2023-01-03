@@ -24,16 +24,19 @@ struct UserDetailView: View {
             }else {
                 
                 ScrollView {
-                    VStack(alignment: .leading,spacing: 18) {
+                    VStack(alignment: .leading,spacing: 12) {
                         
                         avatarPicture
                         
                         Group {
                             generalInfo
                             linkInfo
+                            detailInfo
+                            locationInfo
+                            
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical,18)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical,6)
                         .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                         
                         
@@ -97,13 +100,12 @@ private extension UserDetailView {
     var linkInfo:some View {
         
         if let urlFromJSON = vm.userDetail?.picture,
-           let userURL = URL(string: urlFromJSON),
-           let URLTitle = vm.userDetail?.firstName {
+           let userURL = URL(string: urlFromJSON) {
             
             Link(destination: userURL) {
                 
                 VStack(alignment: .leading,spacing: 8) {
-                    Text(URLTitle)
+                    Text("Website")
                         .foregroundColor(.primary)
                         .font(.system(.body, design: .rounded, weight: .semibold))
                         .multilineTextAlignment(.leading)
@@ -138,10 +140,30 @@ private extension UserDetailView {
         
     }
     
+    var detailInfo:some View {
+        VStack(alignment: .leading,spacing: 8) {
+            Group{
+                genderDateOfBirthPhone
+            }
+            .foregroundColor(.primary)
+            
+        }
+        
+    }
+    
+    var locationInfo:some View {
+        VStack(alignment: .leading,spacing: 8) {
+            Group{
+                location
+            }
+            .foregroundColor(.primary)
+        }
+    }
+    
     @ViewBuilder
     var firstName:some View {
-        Text("First Name")
-            .font(.system(.body, design: .rounded,weight: .semibold))
+        Text("First Name:")
+            .font(.system(.body, design: .rounded,weight: .regular))
         Text(vm.userDetail?.firstName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
         Divider()
@@ -149,17 +171,60 @@ private extension UserDetailView {
     
     @ViewBuilder
     var lastName:some View {
+        Text("Last Name:")
+            .font(.system(.body, design: .rounded,weight: .regular))
         Text(vm.userDetail?.lastName ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
-        Text("<Last Name Here>")
         Divider()
     }
     
     @ViewBuilder
     var email:some View {
-        Text("Email")
-            .font(.system(.body, design: .rounded,weight: .semibold))
+        Text("Email:")
+            .font(.system(.body, design: .rounded,weight: .regular))
         Text(vm.userDetail?.email ?? "-")
             .font(.system(.body, design: .rounded,weight: .semibold))
     }
+    @ViewBuilder
+    var location:some View {
+        Text("Country:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.location.country ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        Divider()
+        Text("State:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.location.state ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        Divider()
+        Text("City:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.location.city ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        Text("Street:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.location.street ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        
+    }
+    
+    @ViewBuilder
+    var genderDateOfBirthPhone:some View {
+        Text("Gender:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.gender.capitalized ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        Divider()
+        Text("Date of Birth:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.dateOfBirth ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+        Divider()
+        Text("Phone:")
+            .font(.system(.body, design: .rounded,weight: .regular))
+        Text(vm.userDetail?.phone ?? "-")
+            .font(.system(.body, design: .rounded,weight: .semibold))
+    }
+    
+    
 }

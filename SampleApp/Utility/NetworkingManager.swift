@@ -22,8 +22,7 @@ final class NetworkingManager {
             // you need to call return because you need to stop execution after calling completion
         }
         
-        var request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
-        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")//app id and token
+        let request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -49,9 +48,7 @@ final class NetworkingManager {
             // you need to call return because you need to stop execution after calling completion
         }
         
-        var request = buildRequest(from: url, methodType: endpoint.methodType)
-        
-        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
+        let request = buildRequest(from: url, methodType: endpoint.methodType)
         
         let (_, response) = try await URLSession.shared.data(for: request)
         
