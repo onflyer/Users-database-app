@@ -95,7 +95,7 @@ private extension NetworkingManager {
                       methodType:EndPoint.MethodType) -> URLRequest {
         
         var request = URLRequest(url: url) // create request for url
-        request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")
+        request.setValue ("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")
         
         switch methodType {
         case .GET:
@@ -103,6 +103,7 @@ private extension NetworkingManager {
         case .POST(let data):
             request.httpMethod = "POST"
             request.httpBody = data   // link the data to send with our request to requestBody
+            
         }
         return request
     }

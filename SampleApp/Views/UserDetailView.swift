@@ -37,7 +37,7 @@ struct UserDetailView: View {
                         }
                         .padding(.horizontal, 14)
                         .padding(.vertical,6)
-                        .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .background(Color(.systemFill), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                         
                         
                     }

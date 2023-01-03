@@ -13,41 +13,42 @@ struct OneUserGridView: View {
     let user: User
     
     var body: some View {
-        HStack {
-            VStack(alignment: .trailing) {
-                AsyncImage(url: .init(string: user.picture), content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipped()
-                }, placeholder: {
-                    ProgressView()
-                })
-                
-                .padding()
-                
-            }
-            .frame(width: 150, height: 150)
-            Divider()
-            Spacer()
-            VStack(alignment: .leading) {
-                Text("\(user.title.rawValue.capitalized)")
-                Text("\(user.firstName)")
-                Text("\(user.lastName)")
+            HStack {
+                VStack(alignment: .trailing) {
+                    AsyncImage(url: .init(string: user.picture), content: { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipped()
+                    }, placeholder: {
+                        ProgressView()
+                    })
+                    
+                    .padding()
+                    
+                }
+                .frame(width: 150, height: 150)
                
+                Spacer()
+                VStack(alignment: .leading) {
+                    Text("\(user.title.rawValue.capitalized)")
+                    Text("\(user.firstName)")
+                    Text("\(user.lastName)")
+                   
+                }
+                .foregroundColor(.primary)
+                .frame(width: 200, height: 150, alignment: .leading)
+                .font(.system(.title, design: .rounded, weight: .bold))
+                
+                
+                
+                
             }
-            .foregroundColor(.primary)
-            .frame(width: 200, height: 150, alignment: .leading)
-            .font(.system(.title, design: .rounded, weight: .bold))
-            
-            
-            
-            
-        }
-        .frame(width: 360, height: 150)
-        .background(Color.white)
+            .frame(width: 360, height: 150)
+            .background(Color(uiColor: .systemFill))
         .cornerRadius(20)
     }
+    
     
 }
 
@@ -62,5 +63,6 @@ struct OneUserGridView_Previews: PreviewProvider {
     
     static var previews: some View {
         OneUserGridView(user: previewOneUser)
+           
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SampleAppApp: App {
+    @AppStorage ("isDarkMode") private var isDark = false
     var body: some Scene {
         WindowGroup {
             TabView {
@@ -23,7 +24,7 @@ struct SampleAppApp: App {
                         Text("Settings")
                     }
             }
-            
+            .environment(\.colorScheme, isDark ? .dark : .light)
         }
     }
 }
