@@ -30,7 +30,7 @@ struct CreateUserView: View {
                     }
                     
                 }
-
+                
                 
                 
                 
@@ -44,7 +44,7 @@ struct CreateUserView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     doneButton
-
+                    
                 }
                 
             }
@@ -53,7 +53,7 @@ struct CreateUserView: View {
                     dismiss()
                     successfulAction()
                 }
-                    
+                
             }
             .alert(isPresented: $vm.hasError, error: vm.error) { }
             .overlay {
@@ -105,9 +105,9 @@ private extension CreateUserView {
         Button("Submit") {
             focusedField = nil // for removing atribute errors
             Task {
-               await vm.create()
+                await vm.create()
             }
-           
+            
         }
     }
 }

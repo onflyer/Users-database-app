@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckMarkPopoverView: View {
     var body: some View {
-       Image(systemName: "checkmark")
+        Image(systemName: "checkmark")
             .font(.system(.largeTitle, design: .rounded, weight: .bold))
             .padding()
             .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10,style: .continuous))

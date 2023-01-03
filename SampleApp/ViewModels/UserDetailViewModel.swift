@@ -20,7 +20,7 @@ final class UserDetailViewModel:ObservableObject {
         defer { isLoading = false }
         
         do {
-        self.userDetail = try await NetworkingManager.shared.request(.userDetail1(id: id), type: UserDetailModel.self)
+            self.userDetail = try await NetworkingManager.shared.request(.userDetail1(id: id), type: UserDetailModel.self)
         } catch  {
             self.hasError = true
             if let networkingError = error as? NetworkingManager.NetworkingError {

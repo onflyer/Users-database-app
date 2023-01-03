@@ -23,8 +23,8 @@ struct OneUserGridView: View {
                 }, placeholder: {
                     ProgressView()
                 })
-                    
-                    .padding()
+                
+                .padding()
                 
             }
             .frame(width: 150, height: 150)
@@ -38,16 +38,16 @@ struct OneUserGridView: View {
             }
             .foregroundColor(.primary)
             .frame(width: 200, height: 150, alignment: .leading)
-        
             
-        
-                
+            
+            
+            
         }
         .frame(width: 360, height: 230)
         .background(Color.gray)
         .cornerRadius(20)
     }
-        
+    
 }
 
 

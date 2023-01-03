@@ -13,7 +13,7 @@ struct UserDetailView: View {
     
     @StateObject private var vm = UserDetailViewModel()
     
-   // @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-" COMMENTED OUT WHEN WE ADDED @StateObject
+    // @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-" COMMENTED OUT WHEN WE ADDED @StateObject
     
     var body: some View {
         ZStack {
@@ -47,7 +47,7 @@ struct UserDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await vm.fetchUserDetail(for: userId)
-            }
+        }
         .alert(isPresented: $vm.hasError, error: vm.error) { }
     }
 }
@@ -68,10 +68,10 @@ struct UserDetailView_Previews: PreviewProvider {
 }
 
 private extension UserDetailView {
-        var backgroundColor:some View {
-            Color(.secondarySystemBackground)
-                .edgesIgnoringSafeArea(.top)
-        }
+    var backgroundColor:some View {
+        Color(.secondarySystemBackground)
+            .edgesIgnoringSafeArea(.top)
+    }
     
     @ViewBuilder
     var avatarPicture:some View {
@@ -82,14 +82,14 @@ private extension UserDetailView {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    
-                    
+                
+                
                 
             } placeholder: {
                 ProgressView()
             }
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-
+            
         }
     }
     
@@ -99,7 +99,7 @@ private extension UserDetailView {
         if let urlFromJSON = vm.userDetail?.picture,
            let userURL = URL(string: urlFromJSON),
            let URLTitle = vm.userDetail?.firstName {
-           
+            
             Link(destination: userURL) {
                 
                 VStack(alignment: .leading,spacing: 8) {
@@ -109,7 +109,7 @@ private extension UserDetailView {
                         .multilineTextAlignment(.leading)
                     Text(urlFromJSON)
                         .scaledToFit()
-                        
+                    
                 }
                 Spacer()
                 
@@ -121,7 +121,7 @@ private extension UserDetailView {
         
         
     }
-    }
+}
 
 private extension UserDetailView {
     

@@ -44,7 +44,7 @@ final class CreateUserViewModel: ObservableObject {
                 self.error = .system(error: error)
             }
         }
-
+        
     }
 }
 
@@ -69,7 +69,7 @@ extension CreateUserViewModel.FormError { // extracting error desrcription from 
     var errorDescription: String? {
         switch self {
         case .networking(let err),
-             .validation(let err):
+                .validation(let err):
             return err.errorDescription
         case .system(let err):
             return err.localizedDescription // system description of what is going wrong

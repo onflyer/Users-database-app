@@ -19,7 +19,7 @@ final class NetworkingManager {
         
         guard let url = endpoint.url else { // create url
             throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
-              // you need to call return because you need to stop execution after calling completion
+            // you need to call return because you need to stop execution after calling completion
         }
         
         var request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
@@ -30,7 +30,7 @@ final class NetworkingManager {
         guard let response = response as? HTTPURLResponse,    // handle response
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
-           throw NetworkingError.invalidStatusCode(statusCode: statusCode)
+            throw NetworkingError.invalidStatusCode(statusCode: statusCode)
         }
         let decoder = JSONDecoder()                // decode data
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -40,17 +40,17 @@ final class NetworkingManager {
         
         
     }
-
-
-    func request(_ endpoint: EndPoint) async throws {
     
+    
+    func request(_ endpoint: EndPoint) async throws {
+        
         guard let url = endpoint.url else { // create url
             throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
-              // you need to call return because you need to stop execution after calling completion
+            // you need to call return because you need to stop execution after calling completion
         }
         
         var request = buildRequest(from: url, methodType: endpoint.methodType)
-
+        
         request.setValue("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id") //app id and token
         
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -58,7 +58,7 @@ final class NetworkingManager {
         guard let response = response as? HTTPURLResponse,    // handle response
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
-           throw NetworkingError.invalidStatusCode(statusCode: statusCode)
+            throw NetworkingError.invalidStatusCode(statusCode: statusCode)
         }
     }
 }

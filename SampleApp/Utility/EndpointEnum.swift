@@ -7,10 +7,10 @@
 
 import Foundation
 
-//MARK: NE KORISTIM OVO UOPSTE U APP ALI MOZE SE UVESTI
+// UVEDENO NA CIJELI APP
 
 enum EndPoint {
-    case usersList
+    case usersList(page: Int)
     case userDetail1(id: String)
     case createUser(submissionData: Data?)
 }
@@ -47,14 +47,14 @@ extension EndPoint {
         }
     }
     
-//    var queryItems: [String: String]? {  // optional because you sometimes dont need query items
-//        switch self {
-//        case .usersList(let page):
-//            return ["page": "\(page)"]
-//        default:
-//            return nil
-//        }
-//    }
+    var queryItems: [String: String]? {  // this is for PAGE AND LIMIT PARAMETERS, optional because you sometimes dont need query items
+        switch self {
+        case .usersList(let page):
+            return ["page": "\(page)"]
+        default:
+            return nil
+        }
+    }
 }
 
 extension EndPoint {
@@ -63,14 +63,16 @@ extension EndPoint {
         urlComponents.scheme = "https"  // http or https
         urlComponents.host = host
         urlComponents.path = path
-//        urlComponents.queryItems = [
-//        URLQueryItem(name: <#T##String#>, value: <#T##String?#>)
-//        ]
         
-//        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
-//            URLQueryItem(name: item.key, value: item.value)
-//        }
+        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
+            URLQueryItem(name: item.key, value: item.value)  // in this case item.key is "page" and item value is \(page)
+        }
         
+        //        #if DEBUG
+        //        requestQueryItems?.append(URLQueryItem(name: "", value: "")) // WHEN YOU WANT TO ADD FOR EXAMPLE delay=2
+        //        #endif
+        
+        urlComponents.queryItems = requestQueryItems // this is for urlcomponents to use our dictionary for parameters var requestQueryItems
         return urlComponents.url  // returnt url from components
     }
 }
