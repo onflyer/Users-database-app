@@ -17,7 +17,7 @@ final class UsersListViewModel: ObservableObject {
     private var page = 0 //for infinite scrolling
     private var totalPages:Int? // if we reach limit for total number of pages to not make a new request
     private var limit = 10
-    private var pageLimit: Int?
+    
     
     var isLoading:Bool {  // computed property for UsersListView isLoading
         viewState == .loading
@@ -59,7 +59,7 @@ final class UsersListViewModel: ObservableObject {
         
         do {
             let response = try await NetworkingManager.shared.request(.usersList(page: page, limit: limit), type: UsersList.self)
-            self.totalPages = response.total //set total pages limit from model
+            self.totalPages = 8 //set total pages limit from model
             self.users += response.data  // append new data onto the users Array from next page
         } catch  {
             self.hasError = true
@@ -89,8 +89,8 @@ private extension UsersListViewModel { // for reseting state , page number and u
     func reset() {
         if viewState == .finished {
             users.removeAll()
-            page = 1
-            totalPages = nil
+            page = 0
+            
             viewState = nil
         }
     }
