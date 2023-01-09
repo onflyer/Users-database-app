@@ -47,7 +47,7 @@ extension EndPoint {
         }
     }
     
-    var queryItems: [String: String]? {  // this is for PAGE AND LIMIT PARAMETERS, optional because you sometimes dont need query items
+    var queryItems: [String: Any]? {  // this is for PAGE AND LIMIT PARAMETERS, optional because you sometimes dont need query items
         switch self {
         case .usersList(let page, let limit):
             return ["page": "\(page)", "limit": "\(limit)"]  //query items
@@ -64,16 +64,18 @@ extension EndPoint {
         urlComponents.host = host
         urlComponents.path = path
         
+        
         var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
-            URLQueryItem(name: item.key, value: item.value)  // in this case item.key is "page" and item value is \(page)
+            URLQueryItem(name: item.key, value: (item.value as! String))  // in this case item.key is "page" and item value is \(page)
         }
         
-#if DEBUG
-        requestQueryItems?.append(URLQueryItem(name: "", value: "")) // WHEN YOU WANT TO ADD FOR EXAMPLE delay=2
-#endif
+
+        requestQueryItems?.append(URLQueryItem(name: "" , value: "")) // WHEN YOU WANT TO ADD FOR EXAMPLE delay=2
+
         
         urlComponents.queryItems = requestQueryItems // this is for urlcomponents to use our dictionary for parameters var requestQueryItems
         return urlComponents.url  // returnt url from components
     }
+    
 }
 

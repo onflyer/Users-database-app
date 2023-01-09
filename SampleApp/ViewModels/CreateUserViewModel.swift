@@ -27,6 +27,8 @@ final class CreateUserViewModel: ObservableObject {
             let encoder = JSONEncoder()
             let data = try encoder.encode(user)
             
+            print(user)
+            
             try await NetworkingManager.shared.request(.createUser(submissionData: data))
             
             state = .successfull

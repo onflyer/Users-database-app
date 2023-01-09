@@ -50,12 +50,15 @@ final class NetworkingManager {
         
         let request = buildRequest(from: url, methodType: endpoint.methodType)
         
+        
         let (_, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse,    // handle response
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
+            print(statusCode)
             throw NetworkingError.invalidStatusCode(statusCode: statusCode)
+            
         }
     }
 }
@@ -94,8 +97,16 @@ private extension NetworkingManager {
     func buildRequest(from url: URL,
                       methodType:EndPoint.MethodType) -> URLRequest {
         
+        let myRestValue = "63a704ab6f2b84b6b5c9786a"
+        let myApplicationID = "app-id"
         var request = URLRequest(url: url) // create request for url
-        request.setValue ("63a704ab6f2b84b6b5c9786a", forHTTPHeaderField: "app-id")
+        request.setValue(myRestValue, forHTTPHeaderField: myApplicationID)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.addValue(myRestValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
+//        request.addValue(myApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
+        print(url)
+//
+        
         
         switch methodType {
         case .GET:
