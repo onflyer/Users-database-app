@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UsersListView: View {
     
+    @AppStorage ("isDarkMode") private var isDark = false
+    
     private var column = Array(repeating: GridItem(.flexible()), count: 1)
     
     @StateObject private var vm = UsersListViewModel()
@@ -78,6 +80,7 @@ struct UsersListView: View {
                     }
                 }
             }
+            .preferredColorScheme(isDark ? .dark : .light)
             .alert(isPresented: $vm.hasError, error: vm.error) {
                 Button("Retry") {
                     Task {

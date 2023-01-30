@@ -90,7 +90,6 @@ private extension UsersListViewModel { // for reseting state , page number and u
         if viewState == .finished {
             users.removeAll()
             page = 0
-            
             viewState = nil
         }
     }
