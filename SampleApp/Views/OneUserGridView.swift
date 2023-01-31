@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct OneUserGridView: View {
     
@@ -15,14 +16,15 @@ struct OneUserGridView: View {
     var body: some View {
             HStack {
                 VStack(alignment: .trailing) {
-                    AsyncImage(url: .init(string: user.picture), content: { image in
-                        image
+                    KFImage(URL(string: user.picture))
+                        .placeholder({ progress in
+                            ProgressView()
+                        })
+                    
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .clipped()
-                    }, placeholder: {
-                        ProgressView()
-                    })
+                    
                     
                     .padding()
                     

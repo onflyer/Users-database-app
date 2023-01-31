@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct UserDetailView: View {
     
@@ -81,16 +82,16 @@ private extension UserDetailView {
         if let userPictureURLFromJSON = vm.userDetail?.picture,
            let userPictureURL = URL(string: userPictureURLFromJSON) {
             
-            AsyncImage(url: userPictureURL) { image in
-                image
+            KFImage(userPictureURL)
+                .placeholder({ progress in
+                    ProgressView()
+                })
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 
                 
                 
-            } placeholder: {
-                ProgressView()
-            }
+            
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             
         }
