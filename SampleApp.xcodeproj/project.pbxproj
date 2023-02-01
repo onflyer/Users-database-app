@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B438BE3298A4DA4004BBA9D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3B438BE2298A4DA4004BBA9D /* FirebaseAnalytics */; };
+		3B438BE5298A4DA4004BBA9D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3B438BE4298A4DA4004BBA9D /* FirebaseCrashlytics */; };
+		3B438BE7298A5092004BBA9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B438BE6298A5092004BBA9D /* GoogleService-Info.plist */; };
 		3B59738229891C00008B5BE0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3B59738129891C00008B5BE0 /* Kingfisher */; };
 		3BB9FC0C2957359C005B1956 /* SampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */; };
 		3BB9FC102957359D005B1956 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BB9FC0F2957359D005B1956 /* Assets.xcassets */; };
@@ -32,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B438BE6298A5092004BBA9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BB9FC082957359C005B1956 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BB9FC0B2957359C005B1956 /* SampleAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppApp.swift; sourceTree = "<group>"; };
 		3BB9FC0F2957359D005B1956 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B438BE5298A4DA4004BBA9D /* FirebaseCrashlytics in Frameworks */,
+				3B438BE3298A4DA4004BBA9D /* FirebaseAnalytics in Frameworks */,
 				3B59738229891C00008B5BE0 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +79,7 @@
 		3BB9FBFF2957359C005B1956 = {
 			isa = PBXGroup;
 			children = (
+				3B438BE6298A5092004BBA9D /* GoogleService-Info.plist */,
 				3BB9FC0A2957359C005B1956 /* SampleApp */,
 				3BB9FC092957359C005B1956 /* Products */,
 			);
@@ -174,6 +181,7 @@
 				3BB9FC042957359C005B1956 /* Sources */,
 				3BB9FC052957359C005B1956 /* Frameworks */,
 				3BB9FC062957359C005B1956 /* Resources */,
+				3B438BE8298A52DE004BBA9D /* Crashlytics Run Script */,
 			);
 			buildRules = (
 			);
@@ -182,6 +190,8 @@
 			name = SampleApp;
 			packageProductDependencies = (
 				3B59738129891C00008B5BE0 /* Kingfisher */,
+				3B438BE2298A4DA4004BBA9D /* FirebaseAnalytics */,
+				3B438BE4298A4DA4004BBA9D /* FirebaseCrashlytics */,
 			);
 			productName = SampleApp;
 			productReference = 3BB9FC082957359C005B1956 /* SampleApp.app */;
@@ -213,6 +223,7 @@
 			mainGroup = 3BB9FBFF2957359C005B1956;
 			packageReferences = (
 				3B59738029891C00008B5BE0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				3B438BE1298A4DA4004BBA9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 3BB9FC092957359C005B1956 /* Products */;
 			projectDirPath = "";
@@ -230,12 +241,35 @@
 			files = (
 				3BB9FC26295850C3005B1956 /* SingleUserStaticData.json in Resources */,
 				3BB9FC142957359D005B1956 /* Preview Assets.xcassets in Resources */,
+				3B438BE7298A5092004BBA9D /* GoogleService-Info.plist in Resources */,
 				3BB9FC102957359D005B1956 /* Assets.xcassets in Resources */,
 				3BB9FC2429585061005B1956 /* UsersStaticData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3B438BE8298A52DE004BBA9D /* Crashlytics Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Crashlytics Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3BB9FC042957359C005B1956 /* Sources */ = {
@@ -382,6 +416,7 @@
 				CODE_SIGN_ENTITLEMENTS = SampleApp/SampleApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"SampleApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FQWAP959Y3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -403,6 +438,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.salka.CoreData.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -442,6 +478,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.salka.CoreData.SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -476,6 +513,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3B438BE1298A4DA4004BBA9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		3B59738029891C00008B5BE0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -487,6 +532,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3B438BE2298A4DA4004BBA9D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B438BE1298A4DA4004BBA9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		3B438BE4298A4DA4004BBA9D /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B438BE1298A4DA4004BBA9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
 		3B59738129891C00008B5BE0 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3B59738029891C00008B5BE0 /* XCRemoteSwiftPackageReference "Kingfisher" */;

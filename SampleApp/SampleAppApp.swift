@@ -6,9 +6,25 @@
 //
 
 import SwiftUI
+import Firebase
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+      
+//      let x: Int? = nil
+//      let y = x!
+
+    return true
+  }
+}
 
 @main
 struct SampleAppApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     @AppStorage ("isDarkMode") private var isDark = false
     var body: some Scene {
         WindowGroup {
