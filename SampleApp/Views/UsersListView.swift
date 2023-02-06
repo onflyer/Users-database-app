@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct UsersListView: View {
     
@@ -123,12 +124,15 @@ private extension UsersListView {
     var addUser:some View {
         Button {
             shouldShowCreate.toggle() // for sheet
+            Analytics.logEvent("Add user", parameters: nil)
+            
         } label: {
             Text("Add user")
                 .font(.system(.headline, design: .rounded)
                     .bold())
             
         }
+        
         .disabled(vm.isLoading)  // so you cant click add user when is loading is true
     }
 }
