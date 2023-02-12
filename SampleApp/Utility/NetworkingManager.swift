@@ -17,21 +17,20 @@ final class NetworkingManager {
     func request<T: Codable>(_ endpoint: EndPoint,
                              type: T.Type) async throws -> T {
         
-        guard let url = endpoint.url else { // create url
-            throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
-            // you need to call return because you need to stop execution after calling completion
+        guard let url = endpoint.url else {
+            throw NetworkingError.invalidUrl
         }
         
-        let request = buildRequest(from: url, methodType: endpoint.methodType) // create request for url
+        let request = buildRequest(from: url, methodType: endpoint.methodType)
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let response = response as? HTTPURLResponse,    // handle response
+        guard let response = response as? HTTPURLResponse,
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
             throw NetworkingError.invalidStatusCode(statusCode: statusCode)
         }
-        let decoder = JSONDecoder()                // decode data
+        let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let res = try decoder.decode(T.self, from: data)
         
@@ -43,9 +42,9 @@ final class NetworkingManager {
     
     func request(_ endpoint: EndPoint) async throws {
         
-        guard let url = endpoint.url else { // create url
-            throw NetworkingError.invalidUrl  // if it fails we call our completion and show error
-            // you need to call return because you need to stop execution after calling completion
+        guard let url = endpoint.url else {
+            throw NetworkingError.invalidUrl
+            
         }
         
         let request = buildRequest(from: url, methodType: endpoint.methodType)
@@ -53,7 +52,7 @@ final class NetworkingManager {
         
         let (_, response) = try await URLSession.shared.data(for: request)
         
-        guard let response = response as? HTTPURLResponse,    // handle response
+        guard let response = response as? HTTPURLResponse,
               (200...300) ~= response.statusCode else {
             let statusCode = (response as! HTTPURLResponse).statusCode
             print(statusCode)
@@ -73,7 +72,7 @@ extension NetworkingManager {
     }
 }
 
-extension NetworkingManager.NetworkingError {  //override error with our own error text
+extension NetworkingManager.NetworkingError {
     var errorDescription: String? {
         switch self {
         case .invalidUrl :
@@ -99,7 +98,7 @@ private extension NetworkingManager {
         
         let myRestValue = "63a704ab6f2b84b6b5c9786a"
         let myApplicationID = "app-id"
-        var request = URLRequest(url: url) // create request for url
+        var request = URLRequest(url: url)
         request.setValue(myRestValue, forHTTPHeaderField: myApplicationID)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 //        request.addValue(myRestValue, forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -113,7 +112,7 @@ private extension NetworkingManager {
             request.httpMethod = "GET"
         case .POST(let data):
             request.httpMethod = "POST"
-            request.httpBody = data   // link the data to send with our request to requestBody
+            request.httpBody = data   
             
         }
         return request

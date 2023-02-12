@@ -58,9 +58,9 @@ struct OneUserGridView: View {
 
 struct OneUserGridView_Previews: PreviewProvider {
     
-    static var previewOneUser:User { //add computed property to show one user from the array
+    static var previewOneUser:User {
         let users = try! StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self)
-        return users.data.first!  // return first user
+        return users.data.first! 
     }
     
     static var previews: some View {

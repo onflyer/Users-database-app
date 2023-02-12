@@ -19,9 +19,9 @@ struct UsersListView: View {
     @StateObject private var vm = UsersListViewModel()
     
     
-    @State private var shouldShowCreate = false //for showing sheet to create
-    @State private var shouldShowSuccess = false // for checkmark popover
-    @State private var hasAppeared = false  //stop fetching unnesecery data
+    @State private var shouldShowCreate = false
+    @State private var shouldShowSuccess = false
+    @State private var hasAppeared = false
     
     var body: some View {
         NavigationStack {
@@ -36,10 +36,10 @@ struct UsersListView: View {
                         LazyVGrid(columns: column, alignment: .center, spacing: 16) {
                             ForEach(vm.users, id:\.id) { user in
                                 NavigationLink {
-                                    UserDetailView(userId: user.id )  // pozovem id usera koji sam dobio iz foreach
+                                    UserDetailView(userId: user.id )
                                 } label: {
                                     OneUserGridView(user: user)
-                                        .task { // infinite scroll to check to see if we have reached the end of users and we are not currently fetching more data, and make request for next page
+                                        .task {
                                             if vm.hasReachedEnd(of: user) && !vm.isFetching {
                                                 await vm.fetchNextSetOfUsers()
                                             }
@@ -49,10 +49,10 @@ struct UsersListView: View {
                             }
                         }
                     }
-                    .refreshable {  // pull to refresh
+                    .refreshable {
                         await vm.fetchUsers()
                     }
-                    .overlay(alignment: .bottom) { // show progresview for next set of users for slow connection
+                    .overlay(alignment: .bottom) {
                         if vm.isFetching {
                             ProgressView()
                         }
@@ -68,8 +68,8 @@ struct UsersListView: View {
                 }
                 
             }
-            .task { //you use .task with onAppear becaiuse it handles cancelation automaticaly not Task closure
-                if !hasAppeared { // if hasAppearred is equal to false, for not fetching everytime
+            .task {
+                if !hasAppeared {
                     await vm.fetchUsers()
                     hasAppeared = true
                 }
@@ -77,7 +77,7 @@ struct UsersListView: View {
                 
             }
             .sheet(isPresented: $shouldShowCreate) {
-                CreateUserView{  // closure for checkmark
+                CreateUserView {
                     withAnimation(.spring().delay(0.25)) {
                         self.shouldShowSuccess.toggle()
                     }
@@ -87,13 +87,13 @@ struct UsersListView: View {
             .alert(isPresented: $vm.hasError, error: vm.error) {
                 Button("Retry") {
                     Task {
-                        await vm.fetchUsers() // when you use a trigger to start async code line gesture or button, you use Task closure not .task modifier
+                        await vm.fetchUsers()
                     }
                     
                 }
-            } // ok button default for alert
+            }
             .overlay {
-                if shouldShowSuccess { // showing and hiding overlay checkmark
+                if shouldShowSuccess {
                     CheckMarkPopoverView()
                         .transition(.scale.combined(with: .opacity))
                         .onAppear {
@@ -123,7 +123,7 @@ private extension UsersListView {
     }
     var addUser:some View {
         Button {
-            shouldShowCreate.toggle() // for sheet
+            shouldShowCreate.toggle()
             Analytics.logEvent("Add user", parameters: nil)
             
         } label: {
@@ -133,6 +133,6 @@ private extension UsersListView {
             
         }
         
-        .disabled(vm.isLoading)  // so you cant click add user when is loading is true
+        .disabled(vm.isLoading)  
     }
 }

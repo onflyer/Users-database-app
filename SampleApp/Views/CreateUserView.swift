@@ -9,10 +9,10 @@ import SwiftUI
 
 struct CreateUserView: View {
     
-    @Environment(\.dismiss) private var dismiss  // for done to dissmis
+    @Environment(\.dismiss) private var dismiss
     @FocusState private var focusedField: Field?
     @StateObject private var vm = CreateUserViewModel()
-    let successfulAction: () -> Void // popover checkmark
+    let successfulAction: () -> Void
     
     var body: some View {
         NavigationStack {
@@ -22,7 +22,7 @@ struct CreateUserView: View {
                     firstName
                     lastName
                     email
-                } footer: {  //extracting error descrtiption from formerror
+                } footer: {
                     if case .validation(let err) = vm.error,
                        let errorDesc = err.errorDescription {
                         Text(errorDesc)
@@ -90,7 +90,7 @@ private extension CreateUserView {
     
     var firstName: some View {
         TextField("First Name", text: $vm.user.firstName)
-            .focused($focusedField, equals: .firstName) // when user taps on firstname textfield ists going to assign .firstName vaue to focusField so system will know that focusedField is this textField so it can resign textField so its not active anymore (atribute errors)
+            .focused($focusedField, equals: .firstName)
     }
     var lastName: some View {
         TextField("Last Name", text: $vm.user.lastName)
@@ -103,7 +103,7 @@ private extension CreateUserView {
     
     var submitButton: some View {
         Button("Submit") {
-            focusedField = nil // for removing atribute errors
+            focusedField = nil 
             Task {
                 await vm.create()
             }

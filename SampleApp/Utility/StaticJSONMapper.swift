@@ -9,7 +9,7 @@ import Foundation
 
 
 struct StaticJSONMapper {
-    static func decode<T:Decodable>(file:String,type:T.Type) throws -> T { // we are going to apply generic constraint of decodable onto this function, we want to tell this function to pass in the type to tell it how you want to map it to model you desire and retur that model to us
+    static func decode<T:Decodable>(file:String,type:T.Type) throws -> T { 
         
         guard let path = Bundle.main.path(forResource: file, ofType: "json"),
               let data = FileManager.default.contents(atPath: path) else {

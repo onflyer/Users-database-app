@@ -10,13 +10,13 @@ import Foundation
 
 final class UserDetailViewModel:ObservableObject {
     
-    @Published private (set) var userDetail:UserDetailModel?  //(set) can be modified just inside of this class and not outside
+    @Published private (set) var userDetail:UserDetailModel?
     @Published private(set) var error: NetworkingManager.NetworkingError?
     @Published private(set) var isLoading:Bool = false
     @Published var hasError = false
     
     @MainActor
-    func fetchUserDetail(for id: String) async {  // for     isLoading = true
+    func fetchUserDetail(for id: String) async {  
         defer { isLoading = false }
         
         do {

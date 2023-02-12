@@ -11,19 +11,19 @@ final class UsersListViewModel: ObservableObject {
     
     @Published private (set) var users:[User] = []
     @Published private(set) var error: NetworkingManager.NetworkingError?
-    @Published private(set) var viewState:ViewState?  // replaced isLoading
+    @Published private(set) var viewState:ViewState?
     @Published var hasError = false
     
-    private var page = 0 //for infinite scrolling
-    private var totalPages:Int? // if we reach limit for total number of pages to not make a new request
+    private var page = 0
+    private var totalPages:Int?
     private var limit = 10
     
     
-    var isLoading:Bool {  // computed property for UsersListView isLoading
+    var isLoading:Bool {
         viewState == .loading
     }
     
-    var isFetching:Bool { // computed property for UsersListView isFetching
+    var isFetching:Bool {
         viewState == .fetching
     }
     
@@ -35,7 +35,7 @@ final class UsersListViewModel: ObservableObject {
         
         do {
             let response = try await NetworkingManager.shared.request(.usersList(page: page, limit: limit), type: UsersList.self)
-            self.totalPages = response.total //set total pages limit from model
+            self.totalPages = response.total
             self.users = response.data
         } catch  {
             self.hasError = true
@@ -48,9 +48,9 @@ final class UsersListViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchNextSetOfUsers() async {  //for infinite scroll to fetch next page
+    func fetchNextSetOfUsers() async {
         
-        guard page != totalPages else {return}   // we dont fetch next set if we reach limit of pages
+        guard page != totalPages else {return}
         
         viewState = .fetching
         defer { viewState = .finished }
@@ -59,8 +59,8 @@ final class UsersListViewModel: ObservableObject {
         
         do {
             let response = try await NetworkingManager.shared.request(.usersList(page: page, limit: limit), type: UsersList.self)
-            self.totalPages = 8 //set total pages limit from model
-            self.users += response.data  // append new data onto the users Array from next page
+            self.totalPages = 8
+            self.users += response.data
         } catch  {
             self.hasError = true
             if let networkingError = error as? NetworkingManager.NetworkingError {
@@ -72,12 +72,12 @@ final class UsersListViewModel: ObservableObject {
         
     }
     
-    func hasReachedEnd(of user:User) -> Bool { // for infinite scrolling to se last user in array
+    func hasReachedEnd(of user:User) -> Bool {
         users.last?.id == user.id
     }
 }
 
-extension UsersListViewModel { // alows us to track a state of this viewmodel
+extension UsersListViewModel {
     enum ViewState {
         case fetching
         case loading
@@ -85,7 +85,7 @@ extension UsersListViewModel { // alows us to track a state of this viewmodel
     }
 }
 
-private extension UsersListViewModel { // for reseting state , page number and users Array like they were originaly
+private extension UsersListViewModel { 
     func reset() {
         if viewState == .finished {
             users.removeAll()

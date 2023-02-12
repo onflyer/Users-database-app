@@ -18,7 +18,7 @@ enum EndPoint {
 extension EndPoint {
     enum MethodType {
         case GET
-        case POST(data: Data?) //associated value to send some kind of data and make it an optional if you dont want send anything through
+        case POST(data: Data?)
     }
 }
 
@@ -40,17 +40,17 @@ extension EndPoint {
         switch self {
         case .usersList:
             return .GET
-        case .userDetail1:  // no need for let id its just for this is .get request
+        case .userDetail1:
             return .GET
         case .createUser(let data):
             return .POST(data: data)
         }
     }
     
-    var queryItems: [String: Any]? {  // this is for PAGE AND LIMIT PARAMETERS, optional because you sometimes dont need query items
+    var queryItems: [String: Any]? {
         switch self {
         case .usersList(let page, let limit):
-            return ["page": "\(page)", "limit": "\(limit)"]  //query items
+            return ["page": "\(page)", "limit": "\(limit)"]
         default:
             return nil
         }
@@ -60,21 +60,21 @@ extension EndPoint {
 extension EndPoint {
     var url: URL? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = "https"  // http or https
+        urlComponents.scheme = "https"
         urlComponents.host = host
         urlComponents.path = path
         
         
-        var requestQueryItems = queryItems?.compactMap { item in   // compactMap helps us fill nil values as well
-            URLQueryItem(name: item.key, value: (item.value as! String))  // in this case item.key is "page" and item value is \(page)
+        var requestQueryItems = queryItems?.compactMap { item in
+            URLQueryItem(name: item.key, value: (item.value as! String))
         }
         
 
-        requestQueryItems?.append(URLQueryItem(name: "" , value: "")) // WHEN YOU WANT TO ADD FOR EXAMPLE delay=2
+        requestQueryItems?.append(URLQueryItem(name: "" , value: ""))
 
         
-        urlComponents.queryItems = requestQueryItems // this is for urlcomponents to use our dictionary for parameters var requestQueryItems
-        return urlComponents.url  // returnt url from components
+        urlComponents.queryItems = requestQueryItems
+        return urlComponents.url  
     }
     
 }

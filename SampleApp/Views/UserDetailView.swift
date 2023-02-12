@@ -10,11 +10,11 @@ import Kingfisher
 
 struct UserDetailView: View {
     
-    let userId:String // samo proslijedim id tip iz modela
+    let userId:String
     
     @StateObject private var vm = UserDetailViewModel()
     
-    // @State private var userDetail:UserDetailModel? // ako nema neki podatak , da prikazemo "-" COMMENTED OUT WHEN WE ADDED @StateObject
+   
     
     var body: some View {
         ZStack {
@@ -58,7 +58,7 @@ struct UserDetailView: View {
 
 struct UserDetailView_Previews: PreviewProvider {
     
-    private static var previewUserId:String {  // pozovem local json i vratim id prvog iz arraya
+    private static var previewUserId:String {
         let users = try! StaticJSONMapper.decode(file: "UsersStaticData", type: UsersList.self)
         
         return users.data.first!.id
@@ -66,7 +66,7 @@ struct UserDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationStack {
-            UserDetailView(userId: previewUserId)  // proslijedim var koji sam kreirao da dobijem id prvog
+            UserDetailView(userId: previewUserId)  
         }
     }
 }

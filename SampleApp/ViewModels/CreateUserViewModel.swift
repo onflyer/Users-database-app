@@ -12,10 +12,10 @@ final class CreateUserViewModel: ObservableObject {
     
     @Published var user = CreateUser()
     @Published private (set) var state: SubmissionState?
-    @Published private(set) var error:FormError? // NetworkingManager.NetworkingError? replaced with formerror enum
+    @Published private(set) var error:FormError?
     @Published var hasError = false
     
-    private let validator = CreateValidator() // instance of validator
+    private let validator = CreateValidator()
     
     @MainActor
     func create() async {
@@ -50,15 +50,15 @@ final class CreateUserViewModel: ObservableObject {
     }
 }
 
-extension CreateUserViewModel {  // we can comunicate back to the view if its success or not for submit
+extension CreateUserViewModel {
     enum SubmissionState {
         case unsuccessfull
         case successfull
-        case submitting // for progresview 
+        case submitting
     }
 }
 
-extension CreateUserViewModel {   // combining with networking error
+extension CreateUserViewModel {
     enum FormError:LocalizedError {
         case networking(error: LocalizedError)
         case validation(error: LocalizedError)
@@ -67,14 +67,14 @@ extension CreateUserViewModel {   // combining with networking error
     
 }
 
-extension CreateUserViewModel.FormError { // extracting error desrcription from associated value from the cas
+extension CreateUserViewModel.FormError {
     var errorDescription: String? {
         switch self {
         case .networking(let err),
              .validation(let err):
             return err.errorDescription
         case .system(let err):
-            return err.localizedDescription // system description of what is going wrong
+            return err.localizedDescription 
         }
     }
 }
